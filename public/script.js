@@ -28,7 +28,7 @@ const TheForm_03_CookiePath    = document.getElementById("TheForm_03_CookiePath"
 
 function Submit_TheForm_01(inEvent){
   // stop our form submission from refreshing the page
-  //inEvent.preventDefault();
+  inEvent.preventDefault();
   
   let objCookieList = Cookies.get(); // Object with each cookie as a property
   let arrCookieList = Object.entries(objCookieList); // to array

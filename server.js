@@ -18,7 +18,7 @@ app.get("/", (request, response) => {
 app.get("/scan", (request, response) => {
   console.log("/scan");
   console.dir(request.headers);
-  //response.sendFile(__dirname + "/views/index.html");
+  response.end();
 });
 
 // listen for requests :)
