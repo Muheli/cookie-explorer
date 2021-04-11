@@ -1,40 +1,149 @@
-// client-side js, loaded by index.html
-// run by the browser each time the page is loaded
+//import Cookies from 'js-cookie'
 
-console.log("hello world :o");
+
+const TheCookiePb     = { // Pb = parameter block.
+  bIsValidated        : false, // bIsValidated -- Need to initialize or recompute before using.
+  bCookiesEnabled     : false,
+  // ----
+  IsReady             : function(){ if (! this.bIsValidated) ResetTheCookiePb(); return this.bIsValidated; }
+};
+//var oFromTheThing = Cookies.get();
 
 // define variables that reference elements on our page
-const TheList = document.getElementById("ListContainer");
-const TheForm = document.querySelector("form");
+const TheForm_01               = document.getElementById("TheForm_01");
+//const TheForm_01_ResultList  = document.getElementById("TheForm_01_ResultList");
+const TheForm_02               = document.getElementById("TheForm_02");
+const TheForm_02_CookieName    = document.getElementById("TheForm_02_CookieName");
+const TheForm_02_CookieValue   = document.getElementById("TheForm_02_CookieValue");
+const TheForm_03               = document.getElementById("TheForm_03");
+const TheForm_03_CookieName    = document.getElementById("TheForm_03_CookieName");
+const TheForm_03_CookieValue   = document.getElementById("TheForm_03_CookieValue");
+const TheForm_03_CookieDomain  = document.getElementById("TheForm_03_CookieDomain");
+const TheForm_03_CookiePath    = document.getElementById("TheForm_03_CookiePath");
 
-// a helper function
-function appendNewItem(inItem) {
-  const newListItem = document.createElement("li");
-  newListItem.innerText = inItem;
-  TheList.appendChild(newListItem);
+
+// ---------
+// Define some functions
+// ---------
+
+function Submit_TheForm_01(inEvent){
+  // stop our form submission from refreshing the page
+  //inEvent.preventDefault();
+  
+  let objCookieList = Cookies.get(); // Object with each cookie as a property
+  let arrCookieList = Object.entries(objCookieList); // to array
+
+  // do stuff
+  console.log(  "TheForm_01"
+    +           ", bCookiesEnabled " + TheCookiePb.bCookiesEnabled
+    +           ", Cookies.get() "   + JSON.stringify(arrCookieList)
+    +           ", length "          + arrCookieList.length // array length     
+  );
+
+  // reset form
+  //TheForm_01.reset();
 }
 
-// fetch the initial list
-fetch("/thelist")
-  .then(response => response.json()) // parse the JSON from the server
-  .then(inParsedList => {
-    // remove the loading text
-    TheList.firstElementChild.remove();
 
-    // iterate through every item and add it to our page
-    inParsedList.forEach(appendNewItem);
+function Submit_TheForm_02(inEvent){
+  // stop our form submission from refreshing the page
+  inEvent.preventDefault();
+  
+  Cookies.set(TheForm_02_CookieName.value, TheForm_02_CookieValue.value);
+  
+  console.log(  "TheForm_02 Cookies.set()"
+    +           ", name "   + TheForm_02_CookieName.value
+    +           ", value "  + TheForm_02_CookieValue.value
+  );
 
-    // listen for the form to be submitted and add item when it is
-    TheForm.addEventListener("submit", event => {
-      // stop our form submission from refreshing the page
-      event.preventDefault();
+  // reset form
+  TheForm_02.reset();
+}
 
-      // get item value and add it to the list
-      let newItem = TheForm.elements.Suggestion.value;
-      appendNewItem(newItem);
 
-      // reset form
-      TheForm.reset();
-      TheForm.elements.Suggestion.focus();
-    });
-  });
+function Submit_TheForm_03(inEvent){
+  let strDomain    = TheForm_03_CookieDomain.value;
+  let strPath      = TheForm_03_CookiePath.value;
+
+  // stop our form submission from refreshing the page
+  inEvent.preventDefault();
+
+  if ( (!! strDomain) || (!! strPath) ){
+    let strAttrAccum = "{ ";
+    
+    if (!! strDomain){
+      strAttrAccum += "domain: " + strDomain;
+      
+      if (!! strPath){
+        strAttrAccum += ", "
+      }
+    }
+    
+    if (!! strPath){
+      strAttrAccum += "path: " + strPath;
+    }
+    
+    Cookies.set(TheForm_03_CookieName.value, TheForm_03_CookieValue.value, strAttrAccum);
+  }else{
+    Cookies.set(TheForm_03_CookieName.value, TheForm_03_CookieValue.value);
+  }
+  
+  console.log(  "TheForm_03 Cookies.set()"
+    +           ", name "   + TheForm_03_CookieName.value
+    +           ", value "  + TheForm_03_CookieValue.value
+    +           ", domain " + TheForm_03_CookieDomain.value
+    +           ", path "   + TheForm_03_CookiePath.value
+  );
+
+  // reset form
+  TheForm_03.reset();
+}
+
+
+// Adding DOM object listeners
+function InitDomListeners(){
+  TheForm_01.addEventListener("submit", Submit_TheForm_01 );
+  TheForm_02.addEventListener("submit", Submit_TheForm_02 );
+  TheForm_03.addEventListener("submit", Submit_TheForm_03 );
+}// InitDomListeners
+
+
+
+
+// See navigator.cookieEnabled property  --  https://www.w3schools.com/js/js_window_navigator.asp
+// See document.cookie property          --  https://www.w3schools.com/js/js_cookies.asp
+// + -- https://www.freecodecamp.org/news/everything-you-need-to-know-about-cookies-for-web-development/
+// + -- https://html.com/resources/cookies-ultimate-guide/
+
+function ResetTheCookiePb (){
+  // Invalidate old parameter block fields.
+  TheCookiePb.bIsValidated        = false;
+  
+  // Set things up.
+  let bCheckCookiesEnabled = !! navigator.cookieEnabled;
+ 
+  // Ready now.
+  TheCookiePb.bIsValidated        = true;
+  TheCookiePb.bCookiesEnabled = bCheckCookiesEnabled;
+  
+  // Write diagnostics.
+  if (TheCookiePb.bIsValidated){
+    console.log(  "ResetTheCookiePb() - "
+      +           ", bCookiesEnabled " + TheCookiePb.bCookiesEnabled
+      +           ", TheCookiePb is ready."
+    );
+  } else {
+    console.log(  "ResetTheCookiePb() - "
+      +           ", TheCookiePb is not ready."
+    );
+  }
+} // ResetTheCookiePb
+
+
+
+// ---------
+// Kick off
+// ---------
+InitDomListeners();
+ResetTheCookiePb();
+

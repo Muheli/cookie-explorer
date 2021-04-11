@@ -12,34 +12,57 @@
     <!-- import the webpage's stylesheet -->
     <link rel="stylesheet" href="/style.css">
 
+    <!-- import the cookie parser module (https://github.com/js-cookie/js-cookie) -->
+    <!--  -->
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <!-- <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.mjs"
+    ></script> -->
+    
     <!-- import the webpage's client-side javascript file -->
     <script src="/script.js" defer></script>
   </head>
   
   <body>
-    <div>
+    <div id="ThePageGp">
       
-      <form>
-        <label>
-          New Item
-          <input name="Suggestion" type="text" maxlength="100" placeholder="type here">
-        </label>
-        <button type="submit" id="submit-item">Add Item</button>
+      <form id="TheForm_01" action="/scan" method="get">
+        <button type="submit">Scan for Cookies</button>
+        <section>
+          <h3>Results:</h3>
+          <ul id="TheForm_01_ResultList">
+            <em>loading the list&hellip;</em>
+          </ul>
+        </section>  
       </form>
+      <hr/>
 
-      <section class="ListSection">
-        <ul id="ListContainer">
-          <em>loading the list&hellip;</em>
-        </ul>
-      </section>
+      <form id="TheForm_02">
+        <h3>Set cookie:</h3>
+        <label for="TheForm_02_CookieName">name:</label>
+        <input type="text" id="TheForm_02_CookieName" name="key" value="BasicConsent"><br>
+        <label for="TheForm_02_CookieValue">value:</label>
+        <input type="text" id="TheForm_02_CookieValue" name="value" value="false"><br>
+        <br>
+        <input type="submit" value="Submit">
+      </form>
+      <hr/>
       
-    </div>
-
-    <footer>Made with <a href="https://glitch.com">Glitch</a>!</footer>
-
-    <!-- include the Glitch button to show what the webpage is about and
-          to make it easier for folks to view source and remix -->
-    <div class="glitchButton" style="position:fixed;top:2em;right:20px;"></div>
-    <script src="https://button.glitch.me/button.js" defer></script>
+      <form id="TheForm_03">
+        <h3>Set cookie:</h3>
+        <label for="TheForm_03_CookieName">name:</label>
+        <input type="text" id="TheForm_03_CookieName" name="key" value="Complex"><br>
+        <label for="TheForm_03_CookieValue">value:</label>
+        <input type="text" id="TheForm_03_CookieValue" name="value" value="false"><br>
+        <label for="TheForm_03_CookieDomain">domain:</label>
+        <input type="text" id="TheForm_03_CookieDomain" name="domain" value=""><br>
+        <label for="TheForm_03_CookiePath">path:</label>
+        <input type="text" id="TheForm_03_CookiePath" name="path" value=""><br>
+        <br>
+        <input type="submit" value="Submit">
+      </form>
+      
+    </div> <!-- ThePageGp -->
   </body>
 </html>
