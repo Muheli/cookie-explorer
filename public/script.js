@@ -64,24 +64,27 @@ function Submit_TheForm_02(inEvent){
 function Submit_TheForm_03(inEvent){
   let strDomain    = TheForm_03_CookieDomain.value;
   let strPath      = TheForm_03_CookiePath.value;
+  let strAttrAccum = "";
 
   // stop our form submission from refreshing the page
   inEvent.preventDefault();
 
   if ( (!! strDomain) || (!! strPath) ){
-    let strAttrAccum = "{ ";
+    strAttrAccum += "{ ";
     
     if (!! strDomain){
       strAttrAccum += "domain: " + strDomain;
       
       if (!! strPath){
-        strAttrAccum += ", "
+        strAttrAccum += ", ";
       }
     }
     
     if (!! strPath){
       strAttrAccum += "path: " + strPath;
     }
+    
+    strAttrAccum += " }";
     
     Cookies.set(TheForm_03_CookieName.value, TheForm_03_CookieValue.value, strAttrAccum);
   }else{
@@ -93,6 +96,7 @@ function Submit_TheForm_03(inEvent){
     +           ", value "  + TheForm_03_CookieValue.value
     +           ", domain " + TheForm_03_CookieDomain.value
     +           ", path "   + TheForm_03_CookiePath.value
+    +           ", attr "   + strAttrAccum
   );
 
   // reset form
