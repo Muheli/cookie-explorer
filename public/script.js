@@ -34,11 +34,16 @@ function Submit_TheForm_01(inEvent){
   let arrCookieList = Object.entries(objCookieList); // to array
 
   // do stuff
-  console.log(  "TheForm_01"
-    +           ", bCookiesEnabled " + TheCookiePb.bCookiesEnabled
-    +           ", Cookies.get() "   + JSON.stringify(arrCookieList)
-    +           ", length "          + arrCookieList.length // array length     
-  );
+
+  fetch("/scan").then(response => {
+
+    console.log(  "TheForm_01"
+      +           ", bCookiesEnabled " + TheCookiePb.bCookiesEnabled
+      +           ", Cookies.get() "   + JSON.stringify(arrCookieList)
+      +           ", length "          + arrCookieList.length // array length     
+    );
+
+  });
 
   // reset form
   //TheForm_01.reset();
@@ -57,7 +62,7 @@ function Submit_TheForm_02(inEvent){
   );
 
   // reset form
-  TheForm_02.reset();
+  //TheForm_02.reset();
 }
 
 
@@ -100,7 +105,7 @@ function Submit_TheForm_03(inEvent){
   );
 
   // reset form
-  TheForm_03.reset();
+  //TheForm_03.reset();
 }
 
 
