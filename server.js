@@ -16,8 +16,10 @@ app.get("/", (request, response) => {
 });
 
 app.get("/scan", (request, response) => {
-  console.log("/scan");
+  console.log("=====\n /scan req hdrs \n=====");
   console.dir(request.headers);
+  // console.log("=====\n /scan rsp hdrs \n=====");
+  // console.dir(response.headers);
   response.end();
 });
 
