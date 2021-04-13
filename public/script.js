@@ -20,11 +20,23 @@ const TheForm_03_CookieName    = document.getElementById("TheForm_03_CookieName"
 const TheForm_03_CookieValue   = document.getElementById("TheForm_03_CookieValue");
 const TheForm_03_CookieDomain  = document.getElementById("TheForm_03_CookieDomain");
 const TheForm_03_CookiePath    = document.getElementById("TheForm_03_CookiePath");
+//
+const TheBtn_A                 = document.getElementById("TheBtn_A");
 
 
 // ---------
 // Define some functions
 // ---------
+
+function Handle_TheBtn_A(inEvent){
+  fetch("/").then(response => {
+
+    console.log(  "Handle_TheBtn_A"
+    );
+    console.dir(response);
+  });  
+}
+
 
 function Submit_TheForm_01(inEvent){
   // stop our form submission from refreshing the page
@@ -42,6 +54,7 @@ function Submit_TheForm_01(inEvent){
       +           ", Cookies.get() "   + JSON.stringify(arrCookieList)
       +           ", length "          + arrCookieList.length // array length     
     );
+    console.dir(response);
 
   });
 
@@ -111,6 +124,7 @@ function Submit_TheForm_03(inEvent){
 
 // Adding DOM object listeners
 function InitDomListeners(){
+  TheBtn_A.addEventListener("click", Handle_TheBtn_A );
   TheForm_01.addEventListener("submit", Submit_TheForm_01 );
   TheForm_02.addEventListener("submit", Submit_TheForm_02 );
   TheForm_03.addEventListener("submit", Submit_TheForm_03 );
